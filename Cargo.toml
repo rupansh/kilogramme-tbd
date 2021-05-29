@@ -1,0 +1,35 @@
+# Copyright 2021 - 2021, Rupansh Sekar and the Kilogramme (TBD) contributors
+# SPDX-License-Identifier: MPL-2.0
+[package]
+name = "kilogramme-tbd"
+version = "0.1.0"
+authors = ["rupansh <rupanshsekar@hotmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+grammers-client = { git = "https://github.com/rupansh/grammers", features = ["markdown"] }
+serde = "1.0"
+toml = "0.5"
+mongodb = "2.0.0-beta"
+grammers-session = { git = "https://github.com/rupansh/grammers" }
+grammers-tl-types = { git = "https://github.com/rupansh/grammers" }
+grammers-mtsender = { git = "https://github.com/rupansh/grammers" }
+grammers-mtproto = { git = "https://github.com/rupansh/grammers" }
+image = "0.23"
+regex = "1"
+lazy_static = "1"
+once_cell = "1"
+thiserror = "1"
+rand = "0.8"
+tokio = { version = "1", features = ["io-util", "io-std", "fs", "rt", "rt-multi-thread", "sync", "time", "macros"]}
+log = "0.4"
+simplelog = "0.10"
+itertools = "0.10"
+unic-emoji-char = "0.9"
+reusable-fmt = "0.1"
+ctrlc = "3"
+
+[build-dependencies]
+reusable-fmt = "0.1"

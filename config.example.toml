@@ -1,0 +1,16 @@
+[options]
+# Whether to write logs to a file
+file_log = true
+
+[telegram]
+# Api ID from telegram
+api_id = 123456
+# Api Hash from Telegram
+api_hash = "fffdddddddcccccccbbbbbbbaaaaa444"
+# Phone number: +CCNUMBER
+# eg: CC = 91, number = 1234567890
+phone = "+911234567890"
+
+[mongo]
+# mongodb uri
+uri = "mongodb://localhost:27017"
