@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["command_handler",""]],"struct":[["UserBot","A wrapper around [`grammers_client::Client`]"],["UserBotStore","Storage for objects that we reuse"]],"type":[["CommandHandlerResult","Expected Result returned from a command handler"]]});

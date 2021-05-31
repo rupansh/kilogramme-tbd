@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["hello","Edits the command message and greets you"]]});

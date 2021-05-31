@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["msg_del","Delete a message"],["purge_msg","Delete multiple messages upto a certain message"]]});

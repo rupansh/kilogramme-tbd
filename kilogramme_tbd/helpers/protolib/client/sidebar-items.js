@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["client_from_config","Create an instance of [`grammers_client::Client`] from [`crate::config::UserBotConfig`]"]]});
