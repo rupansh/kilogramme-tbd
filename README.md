@@ -1,7 +1,7 @@
 # Kilogramme (TBD)
 
 [![RUST](https://img.shields.io/badge/made%20with-RUST-red.svg?style=for-the-badge&logo=rust)](https://www.rust-lang.org/)
-[![MPL-2.0](https://img.shields.io/badge/license%20-MPL--2.0-red.svg?style=for-the-badge&logo=mozilla)](https://spdx.org/licenses/MPL-2.0.html)
+[![MPL-2.0](https://img.shields.io/badge/license%20-MPL--2.0-white.svg?style=for-the-badge&logo=mozilla)](https://spdx.org/licenses/MPL-2.0.html)
 
 *High Performance MTProto Telegram Userbot*
 
@@ -14,7 +14,7 @@
 
 ## Usage
 
-```sh
+```shell
 cargo build --release
 ./target/release/kilogramme-tbd
 ```
@@ -22,18 +22,22 @@ cargo build --release
 ## Configuration
 
 See [config.example.toml](config.example.toml) for an example config
-refer to [docs/CONFIG.md](docs/CONFIG.md) for an in-depth overview
+
+Refer to [docs/CONFIG.md](docs/CONFIG.md) for an in-depth overview
 
 ## FAQ
 
-- Why rust?
-- rust is based and I wanted proper static typing
+> Why rust?
 
-- Can I use this in production?
-- lol
+rust is based and I wanted proper static typing
+<br>
+> Can I use this in production?
 
-- how's the performance?
-- yes
+lol
+<br>
+> how's the performance?
+
+yes
 
 ## To-do
 
@@ -47,5 +51,5 @@ Sorted by priority
 
 ## Other stuff to remember
 
-The source code has some not so safe for work stuff. It has been marked as such with a warning.
+The source code has some not so safe for work stuff. It has been marked as such with a warning.\ 
 tread with caution.

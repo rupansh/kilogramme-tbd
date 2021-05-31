@@ -54,7 +54,7 @@ impl UserBotStore {
         });
     }
 
-    /// Wrapper around [`grammers_client::Client::next_updates`] \
+    /// Wrapper around [`grammers_client::Client::next_update`] \
     /// auto reconnects on ConnectionReset
     pub async fn next_update(&mut self) -> Option<gramme::Update> {
         let mut res;
@@ -110,7 +110,7 @@ impl Drop for UserBotStore {
     }
 }
 
-/// A wrapper around [`grammers_client::ClientHandle`]
+/// A wrapper around [`grammers_client::Client`]
 #[derive(Clone)]
 pub struct UserBot {
     pub client: gramme::Client,
@@ -129,7 +129,7 @@ impl UserBot {
     }
 
     /// Handle a single update from
-    /// [`UserBotStore::next_updates`]
+    /// [`UserBotStore::next_update`]
     pub async fn update_handler(
         &mut self,
         mut message: gramme::types::Message,
@@ -306,6 +306,9 @@ impl UserBot {
         Ok(())
     }
 
+    /// Download media into a raw byte buffer ⚠️[^w]
+    ///
+    /// [^w]: Files on other DCs are not supported
     pub async fn download_media(
         &self,
         media: &gramme::types::Media,
@@ -319,6 +322,7 @@ impl UserBot {
         Ok(res_b)
     }
 
+    /// Upload raw byte buffer
     pub async fn upload_media(
         &self,
         data: &[u8],

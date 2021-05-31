@@ -18,7 +18,7 @@ file_log = true
 
 ### `[telegram]`
 
-Please obtain `api_id` & `api_hash` from [my.telegram.org](my.telegram.org)
+Please obtain `api_id` & `api_hash` from [my.telegram.org](my.telegram.org) \
 ensure that you don't leak the config as these are sensitive keys.
 
 - `api_id` - telegram api id

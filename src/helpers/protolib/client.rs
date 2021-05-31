@@ -7,7 +7,7 @@ use tokio::io::{self, AsyncBufReadExt, BufReader};
 
 /// Create an instance of [`grammers_client::Client`] from [`crate::config::UserBotConfig`]
 ///
-/// uses [`grammers_session::FileSession`] as its session type
+/// uses [`grammers_session::Session`] as its session type
 pub async fn client_from_config(conf: &UserBotConfig) -> Result<Client, UserBotInitError> {
     let tconf = Config {
         session: Session::load_file_or_create(consts::SESSION_FILE)?,
