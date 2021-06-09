@@ -26,16 +26,18 @@ See [config.example.toml](config.example.toml) for an example config
 
 Refer to [docs/CONFIG.md](docs/CONFIG.md) for an in-depth overview
 
+## Contributing
+
+See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)
+
 ## FAQ
 
 > Why rust?
 
-rust is based and I wanted proper static typing
-<br>
+rust is based and I wanted proper static typing  
 > Can I use this in production?
 
-lol
-<br>
+lol  
 > how's the performance?
 
 yes
@@ -44,7 +46,7 @@ yes
 
 Sorted by priority
 
-- More documentation (available commands, `CONTRIBUTING.md` etc)
+- More documentation (available commands, etc)
 - `Dockerfile`
 - Fixing sticker related commands
 - Many memez
@@ -52,5 +54,5 @@ Sorted by priority
 
 ## Other stuff to remember
 
-The source code has some not so safe for work stuff. It has been marked as such with a warning.\ 
+The source code has some not so safe for work stuff. It has been marked as such with a warning.  
 tread with caution.
