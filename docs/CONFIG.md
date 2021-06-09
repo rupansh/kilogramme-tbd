@@ -5,7 +5,7 @@ It has the following sections:
 - [`telegram`](#telegram) - telegram related config
 - [`mongo`](#mongo) - mongo related configs
 
-See [config.example.toml](config.example.toml) for an example config
+See [config.example.toml](../config.example.toml) for an example config
 
 ### `[options]`
 
