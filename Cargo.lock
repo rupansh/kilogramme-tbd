@@ -523,7 +523,7 @@ dependencies = [
 [[package]]
 name = "grammers-client"
 version = "0.3.0"
-source = "git+https://github.com/rupansh/grammers#f2106e8e234b021819b42e2244d111c72c6279d0"
+source = "git+https://github.com/lonami/grammers#ad3fd4b7facafccc1eeacbf1df11a67b58d52e60"
 dependencies = [
  "chrono",
  "futures-util",
@@ -545,7 +545,7 @@ dependencies = [
 [[package]]
 name = "grammers-crypto"
 version = "0.3.0"
-source = "git+https://github.com/rupansh/grammers#f2106e8e234b021819b42e2244d111c72c6279d0"
+source = "git+https://github.com/lonami/grammers#ad3fd4b7facafccc1eeacbf1df11a67b58d52e60"
 dependencies = [
  "aes",
  "getrandom 0.2.3",
@@ -560,7 +560,7 @@ dependencies = [
 [[package]]
 name = "grammers-mtproto"
 version = "0.3.0"
-source = "git+https://github.com/rupansh/grammers#f2106e8e234b021819b42e2244d111c72c6279d0"
+source = "git+https://github.com/lonami/grammers#ad3fd4b7facafccc1eeacbf1df11a67b58d52e60"
 dependencies = [
  "bytes",
  "crc32fast",
@@ -575,7 +575,7 @@ dependencies = [
 [[package]]
 name = "grammers-mtsender"
 version = "0.3.0"
-source = "git+https://github.com/rupansh/grammers#f2106e8e234b021819b42e2244d111c72c6279d0"
+source = "git+https://github.com/lonami/grammers#ad3fd4b7facafccc1eeacbf1df11a67b58d52e60"
 dependencies = [
  "bytes",
  "grammers-mtproto",
@@ -587,7 +587,7 @@ dependencies = [
 [[package]]
 name = "grammers-session"
 version = "0.3.0"
-source = "git+https://github.com/rupansh/grammers#f2106e8e234b021819b42e2244d111c72c6279d0"
+source = "git+https://github.com/lonami/grammers#ad3fd4b7facafccc1eeacbf1df11a67b58d52e60"
 dependencies = [
  "grammers-tl-gen",
  "grammers-tl-parser",
@@ -598,7 +598,7 @@ dependencies = [
 [[package]]
 name = "grammers-tl-gen"
 version = "0.3.0"
-source = "git+https://github.com/rupansh/grammers#f2106e8e234b021819b42e2244d111c72c6279d0"
+source = "git+https://github.com/lonami/grammers#ad3fd4b7facafccc1eeacbf1df11a67b58d52e60"
 dependencies = [
  "grammers-tl-parser",
 ]
@@ -606,7 +606,7 @@ dependencies = [
 [[package]]
 name = "grammers-tl-parser"
 version = "1.0.1"
-source = "git+https://github.com/rupansh/grammers#f2106e8e234b021819b42e2244d111c72c6279d0"
+source = "git+https://github.com/lonami/grammers#ad3fd4b7facafccc1eeacbf1df11a67b58d52e60"
 dependencies = [
  "crc32fast",
 ]
@@ -614,7 +614,7 @@ dependencies = [
 [[package]]
 name = "grammers-tl-types"
 version = "0.3.0"
-source = "git+https://github.com/rupansh/grammers#f2106e8e234b021819b42e2244d111c72c6279d0"
+source = "git+https://github.com/lonami/grammers#ad3fd4b7facafccc1eeacbf1df11a67b58d52e60"
 dependencies = [
  "grammers-tl-gen",
  "grammers-tl-parser",
@@ -1575,9 +1575,9 @@ dependencies = [
 
 [[package]]
 name = "reusable-fmt"
-version = "0.1.2"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f0b0d70cadbaab287212d794bba74c0ed844af339a36991d4982e036628f5b04"
+checksum = "08070344f4199eeb603b350cfefa06de764124454e120071b2ae1240f5c9c83d"
 dependencies = [
  "rustc_version",
 ]
