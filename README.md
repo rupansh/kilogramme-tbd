@@ -26,6 +26,12 @@ See [config.example.toml](config.example.toml) for an example config
 
 Refer to [docs/CONFIG.md](docs/CONFIG.md) for an in-depth overview
 
+## Docker
+
+The bot can be run with docker-compose
+
+See [docs/DOCKER.md](docs/DOCKER.md) for instructions
+
 ## Contributing
 
 See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)
@@ -47,7 +53,6 @@ yes
 Sorted by priority
 
 - More documentation (available commands, etc)
-- `Dockerfile`
 - Fixing sticker related commands
 - Many memez
 - Battle testing (#helpme)

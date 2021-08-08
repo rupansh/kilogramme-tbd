@@ -1,0 +1,30 @@
+version: '3'
+
+networks:
+  internal:
+    external: false
+
+volumes:
+  dbdata:
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - dbdata:/data/db
+    networks:
+      - internal
+
+  userbot:
+    build: .
+    volumes:
+      - type: bind
+        source: ./userbot.session
+        target: /usr/app/userbot.session
+    networks:
+      - internal
+    depends_on:
+      - mongo
