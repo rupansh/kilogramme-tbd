@@ -3,14 +3,37 @@
 use crate::{config::UserBotConfig, consts, errors::UserBotInitError};
 use grammers_client::{Client, Config};
 use grammers_session::Session;
+use std::path::Path;
+use tokio::fs::{self, File};
 use tokio::io::{self, AsyncBufReadExt, BufReader};
+
+fn new_session(path: &Path) -> io::Result<Session> {
+    let session = Session::new();
+    session.save_to_file(path)?;
+
+    Ok(session)
+}
+
+async fn load_or_create_session() -> io::Result<Session> {
+    let session_path = Path::new(consts::SESSION_FILE);
+    let meta = fs::metadata(session_path).await;
+
+    if meta.is_err() {
+        File::create(session_path).await?;
+        new_session(session_path)
+    } else if meta.unwrap().len() == 0 {
+        new_session(session_path)
+    } else {
+        Session::load_file(session_path)
+    }
+}
 
 /// Create an instance of [`grammers_client::Client`] from [`crate::config::UserBotConfig`]
 ///
 /// uses [`grammers_session::Session`] as its session type
 pub async fn client_from_config(conf: &UserBotConfig) -> Result<Client, UserBotInitError> {
     let tconf = Config {
-        session: Session::load_file_or_create(consts::SESSION_FILE)?,
+        session: load_or_create_session().await?,
         api_id: conf.telegram.api_id,
         api_hash: conf.telegram.api_hash.clone(),
         params: Default::default(),
