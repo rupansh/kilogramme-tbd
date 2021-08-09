@@ -3,18 +3,18 @@
 use mongodb::{
     self as mongo,
     Database,
-    bson::{doc, Bson},
+    bson::{doc, Bson, Document},
 };
 use reusable_fmt::fmt;
 use crate::{*, consts};
 
 type DbResult<T> = Result<T, mongo::error::Error>;
 
-fn notes_collection(db: &Database) -> mongo::Collection {
+fn notes_collection(db: &Database) -> mongo::Collection<Document> {
     db.collection(consts::db::COLLECTION_NOTES)
 }
 
-fn stickers_collection(db: &Database) -> mongo::Collection {
+fn stickers_collection(db: &Database) -> mongo::Collection<Document> {
     db.collection(consts::db::COLLECTION_STICKERS)
 }
 

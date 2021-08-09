@@ -13,6 +13,7 @@ use grammers_mtsender::InvocationError;
 use grammers_tl_types as tl;
 use once_cell::sync::OnceCell;
 use reusable_fmt::fmt;
+use std::ops::Deref;
 use tokio::sync::Mutex;
 use unic_emoji_char::is_emoji;
 
@@ -147,7 +148,7 @@ pub async fn kang_handler(bot: &mut UserBot, message: &mut Message) -> CommandHa
     }
 
     let chatg = sticker_chat.unwrap().lock().await;
-    let ref chat = chatg;
+    let chat: &Chat = chatg.deref();
 
     let mut prev = bot
         .client
