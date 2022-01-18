@@ -24,6 +24,9 @@ services:
       - type: bind
         source: ./userbot.session
         target: /usr/app/userbot.session
+      - type: bind
+        source: ./config.toml
+        target: /usr/app/config.toml
     networks:
       - internal
     depends_on:

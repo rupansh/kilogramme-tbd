@@ -1,4 +1,4 @@
-FROM lukemathwalker/cargo-chef:latest-rust-1.53.0-slim-buster as planner
+FROM lukemathwalker/cargo-chef:latest-rust-1.58.0-slim-buster as planner
 WORKDIR app
 COPY . .
 RUN cargo chef prepare --recipe-path recipe.json
@@ -8,7 +8,7 @@ WORKDIR app
 COPY --from=planner /app/recipe.json recipe.json
 RUN cargo chef cook --release --recipe-path recipe.json
 
-FROM rust:1.53.0-slim-buster as build
+FROM rust:1.58.0-slim-buster as build
 
 WORKDIR /usr/src/app
 
