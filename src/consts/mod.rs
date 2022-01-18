@@ -35,4 +35,4 @@ pub const BOT_CMD_FAIL: &str = "Failed to execute command, logged";
 pub const HELLO_TEXT: &str = "`Hi from KiloGramme (TBD)`";
 
 // 100ms
-pub const REPLY_WAIT_TIME: u64 = 100;
+pub const REPLY_WAIT_TIME: u64 = 500;
