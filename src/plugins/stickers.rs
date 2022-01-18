@@ -58,10 +58,11 @@ pub async fn get_sticker_handler(bot: &mut UserBot, message: &mut Message) -> Co
 async fn pack_exists(bot: &mut UserBot, pack: &str) -> Result<bool, InvocationError> {
     let stickerset = tl::types::InputStickerSetShortName {
         short_name: pack.to_string()
-    };
+    }.into();
 
     let req = tl::functions::messages::GetStickerSet {
-        stickerset: stickerset.into()
+        stickerset,
+        hash: 0
     };
 
     match bot.client.invoke(&req).await {

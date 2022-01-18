@@ -12,7 +12,7 @@ edition = "2018"
 grammers-client = { git = "https://github.com/lonami/grammers", features = ["markdown"] }
 serde = "1.0"
 toml = "0.5"
-mongodb = "2.0.0-beta"
+mongodb = "2.1.0"
 grammers-session = { git = "https://github.com/lonami/grammers" }
 grammers-tl-types = { git = "https://github.com/lonami/grammers" }
 grammers-mtsender = { git = "https://github.com/lonami/grammers" }

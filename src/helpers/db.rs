@@ -50,7 +50,7 @@ pub async fn note_list(db: &Database) -> DbResult<impl Iterator<Item = String>> 
     Ok(keys.into_iter().map(|b| Bson::as_str(&b).unwrap().to_owned()))
 }
 
-pub async fn sticker_pack_name(db: &Database, id: i32, pack_user: &str) -> DbResult<String> {
+pub async fn sticker_pack_name(db: &Database, id: i64, pack_user: &str) -> DbResult<String> {
     let stick_coll = stickers_collection(db);
     let pack = stick_coll.find_one_and_update(
         doc!{"pack_name": doc!{"$exists": true}},

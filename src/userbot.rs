@@ -28,7 +28,7 @@ pub type CommandHandlerResult = Result<(), UserBotError>;
 /// [`grammers_client::Client`], [`mongodb::Database`], [`crate::config::UserBotConfig`]
 pub struct UserBotStore {
     pub protoclient: gramme::Client,
-    pub tg_id: i32,
+    pub tg_id: i64,
     _mongo: mongodb::Client,
     pub db: mongodb::Database,
     pub conf: UserBotConfig,
@@ -114,7 +114,7 @@ impl Drop for UserBotStore {
 #[derive(Clone)]
 pub struct UserBot {
     pub client: gramme::Client,
-    pub tg_id: i32, // UserId cache
+    pub tg_id: i64, // UserId cache
     pub db: mongodb::Database,
 }
 
