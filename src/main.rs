@@ -22,7 +22,7 @@ use tokio::sync::watch;
 fn main() {
     let config = UserBotConfig::from_file();
     if config.is_err() {
-        log::error!("invalid config!! {}", config.err().unwrap());
+        eprintln!("invalid config!! {}", config.err().unwrap());
         return;
     }
     let config = config.unwrap();
