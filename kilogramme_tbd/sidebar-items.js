@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["async_main",""],["main",""]],"mod":[["config",""],["consts",""],["errors","High level Error related wrapper Enums"],["helpers",""],["plugins","Command Handlers"],["userbot","High Level wrappers around protolib clients  uses [`grammers_client`] in the back"]]});
+window.SIDEBAR_ITEMS = {"fn":[["async_main",""],["main",""]],"mod":[["config",""],["consts",""],["errors","High level Error related wrapper Enums"],["helpers",""],["plugins","Command Handlers"],["userbot","High Level wrappers around protolib clients  uses [`grammers_client`] in the back"]]};

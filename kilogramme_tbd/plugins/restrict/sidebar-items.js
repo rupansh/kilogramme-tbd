@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["ban_handler","Ban a user"],["kick_handler","Kick a user"],["mute_handler","Mutes a user"],["unban_handler","Unban a user"],["unmute_handler","Unmutes a user"]]});
+window.SIDEBAR_ITEMS = {"fn":[["ban_handler","Ban a user"],["kick_handler","Kick a user"],["mute_handler","Mutes a user"],["unban_handler","Unban a user"],["unmute_handler","Unmutes a user"]]};

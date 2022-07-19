@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["demote_handler","demote an admin"],["pin_handler","pin “reply-to” message"],["promote_handler","promote a user to admin"],["unpin_handler","unpin “reply-to” message"]]});
+window.SIDEBAR_ITEMS = {"fn":[["demote_handler","demote an admin"],["pin_handler","pin “reply-to” message"],["promote_handler","promote a user to admin"],["unpin_handler","unpin “reply-to” message"]]};

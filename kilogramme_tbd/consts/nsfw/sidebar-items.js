@@ -1,1 +1,1 @@
-initSidebarItems({"constant":[["PP","V.funny pp"]]});
+window.SIDEBAR_ITEMS = {"constant":[["PP","V.funny pp"]]};

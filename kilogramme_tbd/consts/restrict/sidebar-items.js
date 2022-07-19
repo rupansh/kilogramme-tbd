@@ -1,1 +1,1 @@
-initSidebarItems({"constant":[["BAN_TXT",""],["BAN_WARN",""],["KICK_TXT",""],["MUTE_TXT",""],["UNBAN_TXT",""]]});
+window.SIDEBAR_ITEMS = {"constant":[["BAN_TXT",""],["BAN_WARN",""],["KICK_TXT",""],["MUTE_TXT",""],["UNBAN_TXT",""]]};

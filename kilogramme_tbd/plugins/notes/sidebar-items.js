@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["add_note_handler","Creates a Note"],["all_notes_handler","Get a list of all note keys"],["get_note_handler","Fetch a Note"],["rm_notes_handler","Delete a Note"]]});
+window.SIDEBAR_ITEMS = {"fn":[["add_note_handler","Creates a Note"],["all_notes_handler","Get a list of all note keys"],["get_note_handler","Fetch a Note"],["rm_notes_handler","Delete a Note"]]};

@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["hello","Edits the command message and greets you"]]});
+window.SIDEBAR_ITEMS = {"fn":[["hello","Edits the command message and greets you"]]};

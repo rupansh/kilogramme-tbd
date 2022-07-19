@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["id_handler","Get chat id or id of the sender of “reply-to” message"],["info_handler","Get basic information about the chat or about the sender of “reply-to” message"],["ping_handler","Get the connection speed to telegram server"]]});
+window.SIDEBAR_ITEMS = {"fn":[["id_handler","Get chat id or id of the sender of “reply-to” message"],["info_handler","Get basic information about the chat or about the sender of “reply-to” message"],["ping_handler","Get the connection speed to telegram server"]]};

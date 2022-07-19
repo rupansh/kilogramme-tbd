@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["mock_handler","lE ePic MocK tExT"],["owo_handler","owo text (・`ω´・)"],["pp_handler","⚠️WARN⚠️: NSFW"],["rand_zalg",""],["stretch_handler","streeeeetch teeeeext"],["vapor_handler","ｖａｐｏｒ  ｔｅｘｔ"],["zalgo_handler","z͎̋a̭̋l͓̕gͤ́o̫̬ t̀͛ e̞͗x̜͡t͓ͬ"]]});
+window.SIDEBAR_ITEMS = {"fn":[["mock_handler","lE ePic MocK tExT"],["owo_handler","owo text (・`ω´・)"],["pp_handler","⚠️WARN⚠️: NSFW"],["rand_zalg",""],["stretch_handler","streeeeetch teeeeext"],["vapor_handler","ｖａｐｏｒ  ｔｅｘｔ"],["zalgo_handler","z͎̋a̭̋l͓̕gͤ́o̫̬ t̀͛ e̞͗x̜͡t͓ͬ"]]};
