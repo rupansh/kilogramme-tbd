@@ -306,15 +306,44 @@ impl UserBot {
         Ok(())
     }
 
-    /// Download media into a raw byte buffer ⚠️[^w]
+    /// Download media from a message into a raw byte buffer ⚠️[^w]
+    ///
+    /// you may optionally pass the media itself. ⚠️[^w2]
     ///
     /// [^w]: Files on other DCs are not supported
+    /// [^w2]: It is assumed that media(if passed) and message match. Not doing 
+    /// so will lead to unexpected behaviour
     pub async fn download_media(
         &self,
-        media: &gramme::types::Media,
+        message: &gramme::types::Message,
+        media: Option<&gramme::types::Media>
     ) -> Result<Vec<u8>, UserBotError> {
         let mut res_b = Vec::<u8>::new();
+        let mut bind: Option<gramme::types::Media> = None;
+        let media = media.map(|m| Ok(m)).unwrap_or_else(
+            || {
+                bind = message.media();
+                bind.as_ref().ok_or(UserBotError::NoMedia)
+            }
+        )?;
+
         let mut media_iter = self.client.iter_download(media);
+        let maybe_chunk = media_iter.next().await;
+        match maybe_chunk {
+            Ok(Some(chunk)) => res_b.extend(chunk),
+            Err(InvocationError::Rpc(err))
+                if err.name.starts_with("FILE_REFERENCE_") =>
+            {
+                let new_msg = self.client.get_messages_by_id(
+                    message.chat(), &[message.id()]
+                ).await?.remove(0).expect("FAILED TO REFETCH MSG?!");
+                let new_media = &new_msg.media().expect("COULDN'T FIND MEDIA?!");
+                media_iter = self.client.iter_download(new_media);
+            }
+            Err(e) => return Err(e.into()),
+            Ok(None) => return Ok(res_b), // empty file?!
+        };
+
         while let Some(chunk) = media_iter.next().await? {
             res_b.extend(chunk);
         }

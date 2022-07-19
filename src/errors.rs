@@ -38,6 +38,8 @@ pub enum UserBotError {
     StrNotEmoji,
     #[error("`given message doesn't have a sticker`")]
     NoSticker,
+    #[error("`given message doesn't have media`")]
+    NoMedia
 }
 
 /// Initialization Error Wrapper
