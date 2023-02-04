@@ -28,8 +28,7 @@ pub async fn ban_handler(bot: &mut UserBot, message: &mut Message) -> CommandHan
     let time_arg = bot
         .get_args_nr(message, true)
         .ok()
-        .map(|a| a.last().map(|s| parse_duration(s)))
-        .flatten()
+        .and_then(|a| a.last().map(|s| parse_duration(s)))
         .flatten();
 
     let b_user = bot.get_arg_user(message).await?;
@@ -110,8 +109,7 @@ pub async fn mute_handler(bot: &mut UserBot, message: &mut Message) -> CommandHa
     let time_arg = bot
         .get_args_nr(message, true)
         .ok()
-        .map(|a| a.last().map(|s| parse_duration(s)))
-        .flatten()
+        .and_then(|a| a.last().map(|s| parse_duration(s)))
         .flatten();
 
     let m_user = bot.get_arg_user(message).await?;

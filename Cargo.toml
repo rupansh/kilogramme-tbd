@@ -33,3 +33,6 @@ ctrlc = "3"
 
 [build-dependencies]
 reusable-fmt = "0.2"
+
+[dev-dependencies]
+rusty-hook = "^0.11.2"

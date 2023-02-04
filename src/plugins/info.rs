@@ -21,9 +21,7 @@ use reusable_fmt::fmt;
 ///
 //UserBotCmd !id
 pub async fn id_handler(bot: &mut UserBot, message: &mut Message) -> CommandHandlerResult {
-    let res: String;
-
-    res = match bot.get_arg_user(message).await {
+    let res: String = match bot.get_arg_user(message).await {
         Ok(user) => fmt!(USER_ID_FMT, user.id()),
         Err(UserBotError::NoArguments) => {
             let chat = message.chat();
@@ -32,7 +30,7 @@ pub async fn id_handler(bot: &mut UserBot, message: &mut Message) -> CommandHand
                 _ => fmt!(CHAT_ID_FMT, chat.id()),
             }
         }
-        Err(e) => return Err(e.into()),
+        Err(e) => return Err(e),
     };
 
     message.edit(InputMessage::markdown(res)).await?;
@@ -57,7 +55,7 @@ pub async fn info_handler(bot: &mut UserBot, message: &mut Message) -> CommandHa
             Some(Chat::User(u)) => u,
             _ => Err(UserBotError::PeerNotUser)?,
         },
-        Err(e) => return Err(e.into()),
+        Err(e) => return Err(e),
     };
 
     let infos = fmt!(

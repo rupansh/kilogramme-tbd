@@ -55,5 +55,5 @@ pub async fn client_from_config(conf: &UserBotConfig) -> Result<Client, UserBotI
         client.session().save_to_file(consts::SESSION_FILE)?;
     }
 
-    return Ok(client);
+    Ok(client)
 }

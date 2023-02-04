@@ -1,7 +1,9 @@
 // Copyright 2021 - 2021, Rupansh Sekar and the Kilogramme (TBD) contributors
 // SPDX-License-Identifier: MPL-2.0
+use image::{
+    codecs::png::PngEncoder, imageops::FilterType, DynamicImage, GenericImageView, ImageResult,
+};
 use std::io::Cursor;
-use image::{DynamicImage, ImageResult, GenericImageView, imageops::FilterType, codecs::png::PngEncoder};
 
 /// Load image from u8 buffer
 pub fn image_from_buf(buf: &[u8]) -> ImageResult<DynamicImage> {

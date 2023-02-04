@@ -39,7 +39,7 @@ pub enum UserBotError {
     #[error("`given message doesn't have a sticker`")]
     NoSticker,
     #[error("`given message doesn't have media`")]
-    NoMedia
+    NoMedia,
 }
 
 /// Initialization Error Wrapper

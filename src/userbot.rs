@@ -6,7 +6,7 @@ use crate::{
     config::UserBotConfig,
     consts::{self, db},
     errors::{UserBotError, UserBotInitError},
-//    handle_invoke,
+    //    handle_invoke,
     helpers::protolib as protohelper,
     plugins,
 };
@@ -45,13 +45,13 @@ impl UserBotStore {
         let me = tclient.get_me().await?;
 
         log::info!("{}", consts::BOT_READY);
-        return Ok(Self {
+        Ok(Self {
             protoclient: tclient,
             tg_id: me.id(),
             _mongo: mclient,
-            db: db,
-            conf: conf,
-        });
+            db,
+            conf,
+        })
     }
 
     /// Wrapper around [`grammers_client::Client::next_update`] \
@@ -91,12 +91,16 @@ impl UserBotStore {
             }
         }
 
-        return Some(res.ok()??);
+        res.ok()?
     }
 
     fn save_session(&mut self) {
         log::info!("saving session...");
-        if let Err(e) = self.protoclient.session().save_to_file(consts::SESSION_FILE) {
+        if let Err(e) = self
+            .protoclient
+            .session()
+            .save_to_file(consts::SESSION_FILE)
+        {
             log::warn!("failed to save session: {}", e);
         } else {
             log::info!("saved!");
@@ -183,7 +187,7 @@ impl UserBot {
         message
             .edit(gramme::types::InputMessage::markdown(msg))
             .await?;
-        return res;
+        res
     }
 
     /// The Message that the passed message is replying to,
@@ -211,7 +215,7 @@ impl UserBot {
             vec![splitstr.to_string()]
         };
 
-        return Ok(args);
+        Ok(args)
     }
 
     /// Get the message without the command prefix
@@ -222,8 +226,8 @@ impl UserBot {
         message: &gramme::types::Message,
         split: bool,
     ) -> Result<Vec<String>, UserBotError> {
-        let splitstr = message.text().splitn(2, " ").nth(1);
-        return self.a_get_args(splitstr, split);
+        let splitstr = message.text().split_once(' ').map(|x| x.1);
+        self.a_get_args(splitstr, split)
     }
 
     /// Get message without the command prefix
@@ -241,7 +245,7 @@ impl UserBot {
         split: bool,
     ) -> Result<Vec<String>, UserBotError> {
         let repm: gramme::types::Message;
-        let splitstr = if let Some(s) = message.text().splitn(2, " ").nth(1) {
+        let splitstr = if let Some(s) = message.text().split_once(' ').map(|x| x.1) {
             Some(s)
         } else if let Some(replym) = self.get_reply_to_message(message).await {
             repm = replym;
@@ -250,7 +254,7 @@ impl UserBot {
             None
         };
 
-        return self.a_get_args(splitstr, split);
+        self.a_get_args(splitstr, split)
     }
 
     /// Resolves the username in the message, if any \
@@ -260,8 +264,8 @@ impl UserBot {
         message: &gramme::types::Message,
     ) -> Result<gramme::types::User, UserBotError> {
         let user = if let Ok(args) = self.get_args_nr(message, true) {
-            let usrnm = if args[0].starts_with("@") {
-                args[0].strip_prefix("@").unwrap()
+            let usrnm = if args[0].starts_with('@') {
+                args[0].strip_prefix('@').unwrap()
             } else {
                 &args[0]
             };
@@ -277,10 +281,10 @@ impl UserBot {
             Err(UserBotError::NoArguments)
         }?;
 
-        return match user {
+        match user {
             gramme::types::Chat::User(u) => Ok(u),
             _ => Err(UserBotError::PeerNotUser),
-        };
+        }
     }
 
     /// Wait for a new message in the chat
@@ -311,32 +315,31 @@ impl UserBot {
     /// you may optionally pass the media itself. ⚠️[^w2]
     ///
     /// [^w]: Files on other DCs are not supported
-    /// [^w2]: It is assumed that media(if passed) and message match. Not doing 
+    /// [^w2]: It is assumed that media(if passed) and message match. Not doing
     /// so will lead to unexpected behaviour
     pub async fn download_media(
         &self,
         message: &gramme::types::Message,
-        media: Option<&gramme::types::Media>
+        media: Option<&gramme::types::Media>,
     ) -> Result<Vec<u8>, UserBotError> {
         let mut res_b = Vec::<u8>::new();
         let mut bind: Option<gramme::types::Media> = None;
-        let media = media.map(|m| Ok(m)).unwrap_or_else(
-            || {
-                bind = message.media();
-                bind.as_ref().ok_or(UserBotError::NoMedia)
-            }
-        )?;
+        let media = media.map(Ok).unwrap_or_else(|| {
+            bind = message.media();
+            bind.as_ref().ok_or(UserBotError::NoMedia)
+        })?;
 
         let mut media_iter = self.client.iter_download(media);
         let maybe_chunk = media_iter.next().await;
         match maybe_chunk {
             Ok(Some(chunk)) => res_b.extend(chunk),
-            Err(InvocationError::Rpc(err))
-                if err.name.starts_with("FILE_REFERENCE_") =>
-            {
-                let new_msg = self.client.get_messages_by_id(
-                    message.chat(), &[message.id()]
-                ).await?.remove(0).expect("FAILED TO REFETCH MSG?!");
+            Err(InvocationError::Rpc(err)) if err.name.starts_with("FILE_REFERENCE_") => {
+                let new_msg = self
+                    .client
+                    .get_messages_by_id(message.chat(), &[message.id()])
+                    .await?
+                    .remove(0)
+                    .expect("FAILED TO REFETCH MSG?!");
                 let new_media = &new_msg.media().expect("COULDN'T FIND MEDIA?!");
                 media_iter = self.client.iter_download(new_media);
             }
@@ -364,6 +367,6 @@ impl UserBot {
             .client
             .upload_stream(&mut data, sz, fname.into())
             .await?;
-        Ok(doc.into())
+        Ok(doc)
     }
 }

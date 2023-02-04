@@ -54,7 +54,7 @@ impl UserBotConfig {
         let mut conf = File::open(consts::CONFIG_FILE)?;
         let mut confdata = String::new();
         conf.read_to_string(&mut confdata)?;
-        return toml::from_str(&confdata).map_err(Into::into);
+        toml::from_str(&confdata).map_err(Into::into)
     }
 }
 

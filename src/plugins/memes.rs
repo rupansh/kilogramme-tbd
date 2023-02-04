@@ -17,7 +17,7 @@ use rand::Rng;
 ///
 //UserBotCmd !owo
 pub async fn owo_handler(bot: &mut UserBot, message: &mut Message) -> CommandHandlerResult {
-    let arg = &bot.get_args_text(&message, false).await?[0];
+    let arg = &bot.get_args_text(message, false).await?[0];
 
     let res = RLW1.0.replace_all(arg, RLW1.1);
     let res = RLW2.0.replace_all(&res, RLW2.1);
@@ -51,7 +51,7 @@ pub async fn owo_handler(bot: &mut UserBot, message: &mut Message) -> CommandHan
 ///
 //UserBotCmd !stretch
 pub async fn stretch_handler(bot: &mut UserBot, message: &mut Message) -> CommandHandlerResult {
-    let arg = &bot.get_args_text(&message, false).await?[0];
+    let arg = &bot.get_args_text(message, false).await?[0];
 
     let numr = r"${1}".repeat(rand::thread_rng().gen_range(3..10));
     let res = STRETCH_REG.replace_all(arg, numr.as_str());
@@ -71,7 +71,7 @@ pub async fn stretch_handler(bot: &mut UserBot, message: &mut Message) -> Comman
 ///
 //UserBotCmd !vapor
 pub async fn vapor_handler(bot: &mut UserBot, message: &mut Message) -> CommandHandlerResult {
-    let arg = &bot.get_args_text(&message, false).await?[0];
+    let arg = &bot.get_args_text(message, false).await?[0];
 
     let res: String = arg
         .as_str()
@@ -107,7 +107,7 @@ pub async fn vapor_handler(bot: &mut UserBot, message: &mut Message) -> CommandH
 ///
 //UserBotCmd !mock
 pub async fn mock_handler(bot: &mut UserBot, message: &mut Message) -> CommandHandlerResult {
-    let arg = &bot.get_args_text(&message, false).await?[0];
+    let arg = &bot.get_args_text(message, false).await?[0];
 
     let res: String = arg
         .as_str()
@@ -152,20 +152,14 @@ fn rand_zalg() -> String {
 ///
 //UserBotCmd !zalgo
 pub async fn zalgo_handler(bot: &mut UserBot, message: &mut Message) -> CommandHandlerResult {
-    let arg = &bot.get_args_text(&message, false).await?[0];
+    let arg = &bot.get_args_text(message, false).await?[0];
 
     let res: String = arg
         .as_str()
         .chars()
         .map(|charac| {
             if charac.is_alphabetic() {
-                format!(
-                    "{}{}{}{}",
-                    charac.to_string(),
-                    rand_zalg(),
-                    rand_zalg(),
-                    rand_zalg()
-                )
+                format!("{}{}{}{}", charac, rand_zalg(), rand_zalg(), rand_zalg())
             } else {
                 charac.to_string()
             }
@@ -192,7 +186,7 @@ pub async fn zalgo_handler(bot: &mut UserBot, message: &mut Message) -> CommandH
 //UserBotCmd !pp
 pub async fn pp_handler(bot: &mut UserBot, message: &mut Message) -> CommandHandlerResult {
     let n = bot
-        .get_args_nr(&message, false)
+        .get_args_nr(message, false)
         .map(|v| v[0].parse::<usize>().ok())
         .ok()
         .flatten()

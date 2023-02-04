@@ -65,7 +65,7 @@ pub async fn purge_msg(bot: &mut UserBot, message: &mut Message) -> CommandHandl
         futs.push(tokio::spawn(async move {
             handle_c.delete_messages(&chat_c, &col).await.unwrap_or(0)
         }));
-        if ids.len() == 0 {
+        if ids.is_empty() {
             break;
         }
     }

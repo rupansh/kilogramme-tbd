@@ -25,15 +25,15 @@ pub fn parse_duration(dur: &str) -> Option<Duration> {
 
     let dur = dur.get(..dur.len() - 1)?.parse::<u64>().ok()?;
 
-    return Some(Duration::from_secs(dur * time_c));
+    Some(Duration::from_secs(dur * time_c))
 }
 
 /// Current system time in UNIX time format
 ///
 /// panics if time stamp is somehow set before 1970
 pub fn epoch_ms() -> u128 {
-    return SystemTime::now()
+    SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .expect("IMPOSSIBLE thanos.png")
-        .as_millis();
+        .as_millis()
 }

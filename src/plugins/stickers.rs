@@ -1,7 +1,7 @@
 // Copyright 2021 - 2021, Rupansh Sekar and the Kilogramme (TBD) contributors
 // SPDX-License-Identifier: MPL-2.0
 use crate::{
-    consts::{stickers::*},
+    consts::stickers::*,
     errors::UserBotError,
     helpers::image,
     userbot::{CommandHandlerResult, UserBot},
@@ -40,15 +40,21 @@ pub async fn get_sticker_handler(bot: &mut UserBot, message: &mut Message) -> Co
     let media = reply.media().ok_or(UserBotError::NoSticker)?;
     let sticker_file = match media {
         Media::Sticker(sticker) => sticker.document,
-        Media::Document(document) if document.mime_type()
-            .filter(|mime| matches!(*mime, "image/webp" | "image/png")).is_some() => document,
+        Media::Document(document)
+            if document
+                .mime_type()
+                .filter(|mime| matches!(*mime, "image/webp" | "image/png"))
+                .is_some() =>
+        {
+            document
+        }
         _ => Err(UserBotError::NoSticker)?,
     };
 
     let fname = sticker_file.name().to_string();
     let sticker_media = Media::Document(sticker_file);
 
-    let dlbuf = bot.download_media(&message, Some(&sticker_media)).await?;
+    let dlbuf = bot.download_media(message, Some(&sticker_media)).await?;
     let sticker = bot.upload_media(&dlbuf, fname).await?;
 
     message.reply(InputMessage::text("").file(sticker)).await?;
@@ -58,18 +64,21 @@ pub async fn get_sticker_handler(bot: &mut UserBot, message: &mut Message) -> Co
 
 async fn pack_exists(bot: &mut UserBot, pack: &str) -> Result<bool, InvocationError> {
     let stickerset = tl::types::InputStickerSetShortName {
-        short_name: pack.to_string()
-    }.into();
+        short_name: pack.to_string(),
+    }
+    .into();
 
     let req = tl::functions::messages::GetStickerSet {
         stickerset,
-        hash: 0
+        hash: 0,
     };
 
     match bot.client.invoke(&req).await {
         Ok(_) => Ok(true),
-        Err(InvocationError::Rpc(RpcError { ref name, .. })) if name == STICKERSET_INVALID => Ok(false),
-        Err(e) => Err(e.into()),
+        Err(InvocationError::Rpc(RpcError { ref name, .. })) if name == STICKERSET_INVALID => {
+            Ok(false)
+        }
+        Err(e) => Err(e),
     }
 }
 
@@ -106,7 +115,14 @@ pub async fn kang_handler(bot: &mut UserBot, message: &mut Message) -> CommandHa
             resize = false;
             Ok(media)
         }
-        Media::Document(document) if document.mime_type().filter(|mime| matches!(*mime, "image/webp" | "image/png" | "image/jpeg")).is_some() => Ok(media),
+        Media::Document(document)
+            if document
+                .mime_type()
+                .filter(|mime| matches!(*mime, "image/webp" | "image/png" | "image/jpeg"))
+                .is_some() =>
+        {
+            Ok(media)
+        }
         _ => Err(UserBotError::NoArguments),
     }?;
 
@@ -131,7 +147,9 @@ pub async fn kang_handler(bot: &mut UserBot, message: &mut Message) -> CommandHa
             // TG stickers are 512x512
             let im = image::im_resize_clamped(&im, 512, 512);
             image::png_encode(im)
-        }).await.unwrap()?;
+        })
+        .await
+        .unwrap()?;
         let sticker = bot.upload_media(&im, STICKER_FILE).await?;
         sticker_message.document(sticker)
     } else {
@@ -169,9 +187,7 @@ pub async fn kang_handler(bot: &mut UserBot, message: &mut Message) -> CommandHa
         bot.wait_reply(chat, &prev).await?;
 
         // Send Sticker
-        prev = prev
-            .respond(sticker_message)
-            .await?;
+        prev = prev.respond(sticker_message).await?;
         bot.wait_reply(chat, &prev).await?;
 
         prev = prev.respond(InputMessage::text(emoji)).await?;
@@ -194,9 +210,7 @@ pub async fn kang_handler(bot: &mut UserBot, message: &mut Message) -> CommandHa
         bot.wait_reply(chat, &prev).await?;
 
         // Send Sticker
-        prev = prev
-            .respond(sticker_message)
-            .await?;
+        prev = prev.respond(sticker_message).await?;
         bot.wait_reply(chat, &prev).await?;
 
         prev = prev.respond(InputMessage::text(emoji)).await?;
@@ -211,7 +225,10 @@ pub async fn kang_handler(bot: &mut UserBot, message: &mut Message) -> CommandHa
     std::mem::drop(chatg);
 
     message
-        .edit(InputMessage::markdown(fmt!(PACK_ADD_SUCCESS, pack_name = pack)))
+        .edit(InputMessage::markdown(fmt!(
+            PACK_ADD_SUCCESS,
+            pack_name = pack
+        )))
         .await?;
 
     Ok(())

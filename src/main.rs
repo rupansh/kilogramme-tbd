@@ -10,13 +10,13 @@ mod plugins;
 mod userbot;
 
 use config::UserBotConfig;
-use ctrlc;
+
 use grammers_client::Update;
 use helpers::time;
 use simplelog::*;
 use std::fs::File;
-use userbot::*;
 use tokio::sync::watch;
+use userbot::*;
 
 // TODO: Documentation, Kang
 fn main() {
@@ -66,10 +66,12 @@ async fn async_main(config: UserBotConfig) {
 
     let (tx, mut rx) = watch::channel::<()>(());
 
-    if ctrlc::set_handler(move || {
+    let ctrlc_res = ctrlc::set_handler(move || {
         log::info!("shutting down bot...");
         tx.send(()).unwrap();
-    }).is_err() {
+    });
+
+    if ctrlc_res.is_err() {
         log::warn!("failed to set ctrl+c handler. Bot won't save session before quitting!");
     }
 

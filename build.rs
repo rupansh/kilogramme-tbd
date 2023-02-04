@@ -50,11 +50,11 @@ fn main() -> io::Result<()> {
                     .strip_prefix("pub async fn")
                     .unwrap()
                     .trim()
-                    .split("(")
-                    .nth(0)
+                    .split('(')
+                    .next()
                     .unwrap()
-                    .split("<")
-                    .nth(0)
+                    .split('<')
+                    .next()
                     .unwrap();
 
                 cases.push(format!(
@@ -66,9 +66,9 @@ fn main() -> io::Result<()> {
         }
     }
 
-    let cmd_hnd_src = fmt!(CMD_GEN_SRC, src = &cases.join("\n")).to_string();
+    let cmd_hnd_src = fmt!(CMD_GEN_SRC, src = &cases.join("\n"));
     let cmd_hnd_file = Path::new(&std::env::var("OUT_DIR").unwrap()).join("commands.gen.rs");
-    let mut writer = BufWriter::new(fs::File::create(&cmd_hnd_file).unwrap());
+    let mut writer = BufWriter::new(fs::File::create(cmd_hnd_file).unwrap());
     write!(&mut writer, "{}", cmd_hnd_src).unwrap();
 
     Ok(())
