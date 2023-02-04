@@ -1,3 +1,3 @@
-(function() {var implementors = {};
-implementors["kilogramme_tbd"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html\" title=\"trait core::clone::Clone\">Clone</a> for <a class=\"struct\" href=\"kilogramme_tbd/userbot/struct.UserBot.html\" title=\"struct kilogramme_tbd::userbot::UserBot\">UserBot</a>","synthetic":false,"types":["kilogramme_tbd::userbot::UserBot"]}];
-if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
+(function() {var implementors = {
+"kilogramme_tbd":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html\" title=\"trait core::clone::Clone\">Clone</a> for <a class=\"struct\" href=\"kilogramme_tbd/userbot/struct.UserBot.html\" title=\"struct kilogramme_tbd::userbot::UserBot\">UserBot</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
