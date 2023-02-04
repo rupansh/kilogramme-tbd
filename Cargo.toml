@@ -9,14 +9,14 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-grammers-client = { git = "https://github.com/lonami/grammers", features = ["markdown"] }
+grammers-client = { git = "https://github.com/lonami/grammers", features = ["markdown"], rev = "818ddf889fbc09103700b2a0d8bf96ccd6c022af" }
 serde = "1.0"
 toml = "0.5"
 mongodb = "2.1.0"
-grammers-session = { git = "https://github.com/lonami/grammers" }
-grammers-tl-types = { git = "https://github.com/lonami/grammers" }
-grammers-mtsender = { git = "https://github.com/lonami/grammers" }
-grammers-mtproto = { git = "https://github.com/lonami/grammers" }
+grammers-session = { git = "https://github.com/lonami/grammers", rev = "818ddf889fbc09103700b2a0d8bf96ccd6c022af" }
+grammers-tl-types = { git = "https://github.com/lonami/grammers", rev = "818ddf889fbc09103700b2a0d8bf96ccd6c022af" }
+grammers-mtsender = { git = "https://github.com/lonami/grammers", rev = "818ddf889fbc09103700b2a0d8bf96ccd6c022af" }
+grammers-mtproto = { git = "https://github.com/lonami/grammers", rev = "818ddf889fbc09103700b2a0d8bf96ccd6c022af" }
 image = "0.23"
 regex = "1"
 lazy_static = "1"

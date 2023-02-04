@@ -41,7 +41,7 @@ impl UserBotStore {
         let mclient = mongodb::Client::with_options(mconf)?;
         let db = mclient.database(db::DB_NAME);
 
-        let mut tclient = protohelper::client_from_config(&conf).await?;
+        let tclient = protohelper::client_from_config(&conf).await?;
         let me = tclient.get_me().await?;
 
         log::info!("{}", consts::BOT_READY);

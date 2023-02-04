@@ -39,7 +39,7 @@ pub async fn client_from_config(conf: &UserBotConfig) -> Result<Client, UserBotI
         params: Default::default(),
     };
 
-    let mut client = Client::connect(tconf).await?;
+    let client = Client::connect(tconf).await?;
     if !client.is_authorized().await? {
         let sent_code = client
             .request_login_code(
