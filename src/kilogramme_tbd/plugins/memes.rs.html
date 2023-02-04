@@ -195,12 +195,6 @@
 <a href="#195" id="195">195</a>
 <a href="#196" id="196">196</a>
 <a href="#197" id="197">197</a>
-<a href="#198" id="198">198</a>
-<a href="#199" id="199">199</a>
-<a href="#200" id="200">200</a>
-<a href="#201" id="201">201</a>
-<a href="#202" id="202">202</a>
-<a href="#203" id="203">203</a>
 </pre><pre class="rust"><code><span class="comment">// Copyright 2021 - 2021, Rupansh Sekar and the Kilogramme (TBD) contributors
 // SPDX-License-Identifier: MPL-2.0
 </span><span class="kw">use </span><span class="kw">crate</span>::consts::{memes::<span class="kw-2">*</span>, nsfw};
@@ -220,7 +214,7 @@
 ///
 </span><span class="comment">//UserBotCmd !owo
 </span><span class="kw">pub async fn </span>owo_handler(bot: <span class="kw-2">&amp;mut </span>UserBot, message: <span class="kw-2">&amp;mut </span>Message) -&gt; CommandHandlerResult {
-    <span class="kw">let </span>arg = <span class="kw-2">&amp;</span>bot.get_args_text(<span class="kw-2">&amp;</span>message, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>[<span class="number">0</span>];
+    <span class="kw">let </span>arg = <span class="kw-2">&amp;</span>bot.get_args_text(message, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>[<span class="number">0</span>];
 
     <span class="kw">let </span>res = RLW1.<span class="number">0</span>.replace_all(arg, RLW1.<span class="number">1</span>);
     <span class="kw">let </span>res = RLW2.<span class="number">0</span>.replace_all(<span class="kw-2">&amp;</span>res, RLW2.<span class="number">1</span>);
@@ -254,7 +248,7 @@
 ///
 </span><span class="comment">//UserBotCmd !stretch
 </span><span class="kw">pub async fn </span>stretch_handler(bot: <span class="kw-2">&amp;mut </span>UserBot, message: <span class="kw-2">&amp;mut </span>Message) -&gt; CommandHandlerResult {
-    <span class="kw">let </span>arg = <span class="kw-2">&amp;</span>bot.get_args_text(<span class="kw-2">&amp;</span>message, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>[<span class="number">0</span>];
+    <span class="kw">let </span>arg = <span class="kw-2">&amp;</span>bot.get_args_text(message, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>[<span class="number">0</span>];
 
     <span class="kw">let </span>numr = <span class="string">r&quot;${1}&quot;</span>.repeat(rand::thread_rng().gen_range(<span class="number">3</span>..<span class="number">10</span>));
     <span class="kw">let </span>res = STRETCH_REG.replace_all(arg, numr.as_str());
@@ -274,7 +268,7 @@
 ///
 </span><span class="comment">//UserBotCmd !vapor
 </span><span class="kw">pub async fn </span>vapor_handler(bot: <span class="kw-2">&amp;mut </span>UserBot, message: <span class="kw-2">&amp;mut </span>Message) -&gt; CommandHandlerResult {
-    <span class="kw">let </span>arg = <span class="kw-2">&amp;</span>bot.get_args_text(<span class="kw-2">&amp;</span>message, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>[<span class="number">0</span>];
+    <span class="kw">let </span>arg = <span class="kw-2">&amp;</span>bot.get_args_text(message, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>[<span class="number">0</span>];
 
     <span class="kw">let </span>res: String = arg
         .as_str()
@@ -310,7 +304,7 @@
 ///
 </span><span class="comment">//UserBotCmd !mock
 </span><span class="kw">pub async fn </span>mock_handler(bot: <span class="kw-2">&amp;mut </span>UserBot, message: <span class="kw-2">&amp;mut </span>Message) -&gt; CommandHandlerResult {
-    <span class="kw">let </span>arg = <span class="kw-2">&amp;</span>bot.get_args_text(<span class="kw-2">&amp;</span>message, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>[<span class="number">0</span>];
+    <span class="kw">let </span>arg = <span class="kw-2">&amp;</span>bot.get_args_text(message, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>[<span class="number">0</span>];
 
     <span class="kw">let </span>res: String = arg
         .as_str()
@@ -355,20 +349,14 @@
 ///
 </span><span class="comment">//UserBotCmd !zalgo
 </span><span class="kw">pub async fn </span>zalgo_handler(bot: <span class="kw-2">&amp;mut </span>UserBot, message: <span class="kw-2">&amp;mut </span>Message) -&gt; CommandHandlerResult {
-    <span class="kw">let </span>arg = <span class="kw-2">&amp;</span>bot.get_args_text(<span class="kw-2">&amp;</span>message, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>[<span class="number">0</span>];
+    <span class="kw">let </span>arg = <span class="kw-2">&amp;</span>bot.get_args_text(message, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>[<span class="number">0</span>];
 
     <span class="kw">let </span>res: String = arg
         .as_str()
         .chars()
         .map(|charac| {
             <span class="kw">if </span>charac.is_alphabetic() {
-                <span class="macro">format!</span>(
-                    <span class="string">&quot;{}{}{}{}&quot;</span>,
-                    charac.to_string(),
-                    rand_zalg(),
-                    rand_zalg(),
-                    rand_zalg()
-                )
+                <span class="macro">format!</span>(<span class="string">&quot;{}{}{}{}&quot;</span>, charac, rand_zalg(), rand_zalg(), rand_zalg())
             } <span class="kw">else </span>{
                 charac.to_string()
             }
@@ -395,7 +383,7 @@
 </span><span class="comment">//UserBotCmd !pp
 </span><span class="kw">pub async fn </span>pp_handler(bot: <span class="kw-2">&amp;mut </span>UserBot, message: <span class="kw-2">&amp;mut </span>Message) -&gt; CommandHandlerResult {
     <span class="kw">let </span>n = bot
-        .get_args_nr(<span class="kw-2">&amp;</span>message, <span class="bool-val">false</span>)
+        .get_args_nr(message, <span class="bool-val">false</span>)
         .map(|v| v[<span class="number">0</span>].parse::&lt;usize&gt;().ok())
         .ok()
         .flatten()

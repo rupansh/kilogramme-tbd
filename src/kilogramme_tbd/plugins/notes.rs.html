@@ -107,6 +107,8 @@
 <a href="#107" id="107">107</a>
 <a href="#108" id="108">108</a>
 <a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
 </pre><pre class="rust"><code><span class="comment">// Copyright 2021 - 2021, Rupansh Sekar and the Kilogramme (TBD) contributors
 // SPDX-License-Identifier: MPL-2.0
 </span><span class="kw">use crate</span>::{
@@ -159,16 +161,14 @@
 </span><span class="comment">//UserBotCmd !get
 </span><span class="kw">pub async fn </span>get_note_handler(bot: <span class="kw-2">&amp;mut </span>UserBot, message: <span class="kw-2">&amp;mut </span>Message) -&gt; CommandHandlerResult {
     <span class="kw">let </span>name = bot.get_args_nr(message, <span class="bool-val">true</span>)<span class="question-mark">?</span>.remove(<span class="number">0</span>);
-    <span class="kw">let </span>note = helpers::db::find_note(<span class="kw-2">&amp;</span>bot.db, <span class="kw-2">&amp;</span>name).<span class="kw">await</span><span class="question-mark">?</span>.ok_or(UserBotError::NoteNotFound)<span class="question-mark">?</span>;
+    <span class="kw">let </span>note = helpers::db::find_note(<span class="kw-2">&amp;</span>bot.db, <span class="kw-2">&amp;</span>name)
+        .<span class="kw">await</span><span class="question-mark">?
+        </span>.ok_or(UserBotError::NoteNotFound)<span class="question-mark">?</span>;
 
     <span class="comment">// TODO: I NEED PEERSELF HERE!!!
     </span><span class="kw">let </span>me = bot.client.get_me().<span class="kw">await</span><span class="question-mark">?</span>;
     bot.client
-        .forward_messages(
-            <span class="kw-2">&amp;</span>message.chat(),
-            <span class="kw-2">&amp;</span>[note],
-            <span class="kw-2">&amp;</span>Chat::User(me),
-        )
+        .forward_messages(<span class="kw-2">&amp;</span>message.chat(), <span class="kw-2">&amp;</span>[note], <span class="kw-2">&amp;</span>Chat::User(me))
         .<span class="kw">await</span><span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())
@@ -186,13 +186,17 @@
 </span><span class="kw">pub async fn </span>rm_notes_handler(bot: <span class="kw-2">&amp;mut </span>UserBot, message: <span class="kw-2">&amp;mut </span>Message) -&gt; CommandHandlerResult {
     <span class="kw">let </span>name = bot.get_args_nr(message, <span class="bool-val">true</span>)<span class="question-mark">?</span>.remove(<span class="number">0</span>);
 
-    <span class="kw">if </span>helpers::db::remove_note(<span class="kw-2">&amp;</span>bot.db, <span class="kw-2">&amp;</span>name).<span class="kw">await</span><span class="question-mark">?</span>.deleted_count != <span class="number">0 </span>{
+    <span class="kw">if </span>helpers::db::remove_note(<span class="kw-2">&amp;</span>bot.db, <span class="kw-2">&amp;</span>name)
+        .<span class="kw">await</span><span class="question-mark">?
+        </span>.deleted_count
+        != <span class="number">0
+    </span>{
         message
             .edit(InputMessage::markdown(<span class="macro">fmt!</span>(NOTE_DEL_SUCCESS, name)))
             .<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     } <span class="kw">else </span>{
-        <span class="kw">return </span><span class="prelude-val">Err</span>(UserBotError::NoteNotFound);
+        <span class="prelude-val">Err</span>(UserBotError::NoteNotFound)
     }
 }
 
@@ -207,13 +211,13 @@
 </span><span class="comment">//UserBotCmd !notes
 </span><span class="kw">pub async fn </span>all_notes_handler(bot: <span class="kw-2">&amp;mut </span>UserBot, message: <span class="kw-2">&amp;mut </span>Message) -&gt; CommandHandlerResult {
     <span class="kw">let </span>keys: Vec&lt;String&gt; = helpers::db::note_list(<span class="kw-2">&amp;</span>bot.db).<span class="kw">await</span><span class="question-mark">?</span>.collect();
-    <span class="kw">if </span>keys.len() &gt; <span class="number">0 </span>{
+    <span class="kw">if </span>!keys.is_empty() {
         message
-            .edit(InputMessage::markdown(keys.join(<span class="string">&quot;\n&quot;</span>),))
+            .edit(InputMessage::markdown(keys.join(<span class="string">&quot;\n&quot;</span>)))
             .<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     } <span class="kw">else </span>{
-        <span class="kw">return </span><span class="prelude-val">Err</span>(UserBotError::NotesEmpty);
+        <span class="prelude-val">Err</span>(UserBotError::NotesEmpty)
     }
 }
 </code></pre></div>

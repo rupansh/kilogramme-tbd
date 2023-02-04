@@ -367,6 +367,9 @@
 <a href="#367" id="367">367</a>
 <a href="#368" id="368">368</a>
 <a href="#369" id="369">369</a>
+<a href="#370" id="370">370</a>
+<a href="#371" id="371">371</a>
+<a href="#372" id="372">372</a>
 </pre><pre class="rust"><code><span class="comment">// Copyright 2021 - 2021, Rupansh Sekar and the Kilogramme (TBD) contributors
 // SPDX-License-Identifier: MPL-2.0
 </span><span class="doccomment">//! High Level wrappers around protolib clients \
@@ -375,7 +378,7 @@
     config::UserBotConfig,
     consts::{<span class="self">self</span>, db},
     errors::{UserBotError, UserBotInitError},
-<span class="comment">//    handle_invoke,
+    <span class="comment">//    handle_invoke,
     </span>helpers::protolib <span class="kw">as </span>protohelper,
     plugins,
 };
@@ -414,13 +417,13 @@
         <span class="kw">let </span>me = tclient.get_me().<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="macro">log::info!</span>(<span class="string">&quot;{}&quot;</span>, consts::BOT_READY);
-        <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="self">Self </span>{
+        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             protoclient: tclient,
             tg_id: me.id(),
             _mongo: mclient,
-            db: db,
-            conf: conf,
-        });
+            db,
+            conf,
+        })
     }
 
     <span class="doccomment">/// Wrapper around [`grammers_client::Client::next_update`] \
@@ -460,12 +463,16 @@
             }
         }
 
-        <span class="kw">return </span><span class="prelude-val">Some</span>(res.ok()<span class="question-mark">??</span>);
-    }
+        res.ok()<span class="question-mark">?
+    </span>}
 
     <span class="kw">fn </span>save_session(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="macro">log::info!</span>(<span class="string">&quot;saving session...&quot;</span>);
-        <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = <span class="self">self</span>.protoclient.session().save_to_file(consts::SESSION_FILE) {
+        <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = <span class="self">self
+            </span>.protoclient
+            .session()
+            .save_to_file(consts::SESSION_FILE)
+        {
             <span class="macro">log::warn!</span>(<span class="string">&quot;failed to save session: {}&quot;</span>, e);
         } <span class="kw">else </span>{
             <span class="macro">log::info!</span>(<span class="string">&quot;saved!&quot;</span>);
@@ -552,7 +559,7 @@
         message
             .edit(gramme::types::InputMessage::markdown(msg))
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">return </span>res;
+        res
     }
 
     <span class="doccomment">/// The Message that the passed message is replying to,
@@ -580,7 +587,7 @@
             <span class="macro">vec!</span>[splitstr.to_string()]
         };
 
-        <span class="kw">return </span><span class="prelude-val">Ok</span>(args);
+        <span class="prelude-val">Ok</span>(args)
     }
 
     <span class="doccomment">/// Get the message without the command prefix
@@ -591,8 +598,8 @@
         message: <span class="kw-2">&amp;</span>gramme::types::Message,
         split: bool,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;String&gt;, UserBotError&gt; {
-        <span class="kw">let </span>splitstr = message.text().splitn(<span class="number">2</span>, <span class="string">&quot; &quot;</span>).nth(<span class="number">1</span>);
-        <span class="kw">return </span><span class="self">self</span>.a_get_args(splitstr, split);
+        <span class="kw">let </span>splitstr = message.text().split_once(<span class="string">&#39; &#39;</span>).map(|x| x.<span class="number">1</span>);
+        <span class="self">self</span>.a_get_args(splitstr, split)
     }
 
     <span class="doccomment">/// Get message without the command prefix
@@ -610,7 +617,7 @@
         split: bool,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;String&gt;, UserBotError&gt; {
         <span class="kw">let </span>repm: gramme::types::Message;
-        <span class="kw">let </span>splitstr = <span class="kw">if let </span><span class="prelude-val">Some</span>(s) = message.text().splitn(<span class="number">2</span>, <span class="string">&quot; &quot;</span>).nth(<span class="number">1</span>) {
+        <span class="kw">let </span>splitstr = <span class="kw">if let </span><span class="prelude-val">Some</span>(s) = message.text().split_once(<span class="string">&#39; &#39;</span>).map(|x| x.<span class="number">1</span>) {
             <span class="prelude-val">Some</span>(s)
         } <span class="kw">else if let </span><span class="prelude-val">Some</span>(replym) = <span class="self">self</span>.get_reply_to_message(message).<span class="kw">await </span>{
             repm = replym;
@@ -619,7 +626,7 @@
             <span class="prelude-val">None
         </span>};
 
-        <span class="kw">return </span><span class="self">self</span>.a_get_args(splitstr, split);
+        <span class="self">self</span>.a_get_args(splitstr, split)
     }
 
     <span class="doccomment">/// Resolves the username in the message, if any \
@@ -629,8 +636,8 @@
         message: <span class="kw-2">&amp;</span>gramme::types::Message,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;gramme::types::User, UserBotError&gt; {
         <span class="kw">let </span>user = <span class="kw">if let </span><span class="prelude-val">Ok</span>(args) = <span class="self">self</span>.get_args_nr(message, <span class="bool-val">true</span>) {
-            <span class="kw">let </span>usrnm = <span class="kw">if </span>args[<span class="number">0</span>].starts_with(<span class="string">&quot;@&quot;</span>) {
-                args[<span class="number">0</span>].strip_prefix(<span class="string">&quot;@&quot;</span>).unwrap()
+            <span class="kw">let </span>usrnm = <span class="kw">if </span>args[<span class="number">0</span>].starts_with(<span class="string">&#39;@&#39;</span>) {
+                args[<span class="number">0</span>].strip_prefix(<span class="string">&#39;@&#39;</span>).unwrap()
             } <span class="kw">else </span>{
                 <span class="kw-2">&amp;</span>args[<span class="number">0</span>]
             };
@@ -646,10 +653,10 @@
             <span class="prelude-val">Err</span>(UserBotError::NoArguments)
         }<span class="question-mark">?</span>;
 
-        <span class="kw">return match </span>user {
+        <span class="kw">match </span>user {
             gramme::types::Chat::User(u) =&gt; <span class="prelude-val">Ok</span>(u),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(UserBotError::PeerNotUser),
-        };
+        }
     }
 
     <span class="doccomment">/// Wait for a new message in the chat
@@ -680,32 +687,31 @@
     /// you may optionally pass the media itself. ⚠️[^w2]
     ///
     /// [^w]: Files on other DCs are not supported
-    /// [^w2]: It is assumed that media(if passed) and message match. Not doing 
+    /// [^w2]: It is assumed that media(if passed) and message match. Not doing
     /// so will lead to unexpected behaviour
     </span><span class="kw">pub async fn </span>download_media(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         message: <span class="kw-2">&amp;</span>gramme::types::Message,
-        media: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>gramme::types::Media&gt;
+        media: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>gramme::types::Media&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;u8&gt;, UserBotError&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>res_b = Vec::&lt;u8&gt;::new();
         <span class="kw">let </span><span class="kw-2">mut </span>bind: <span class="prelude-ty">Option</span>&lt;gramme::types::Media&gt; = <span class="prelude-val">None</span>;
-        <span class="kw">let </span>media = media.map(|m| <span class="prelude-val">Ok</span>(m)).unwrap_or_else(
-            || {
-                bind = message.media();
-                bind.as_ref().ok_or(UserBotError::NoMedia)
-            }
-        )<span class="question-mark">?</span>;
+        <span class="kw">let </span>media = media.map(<span class="prelude-val">Ok</span>).unwrap_or_else(|| {
+            bind = message.media();
+            bind.as_ref().ok_or(UserBotError::NoMedia)
+        })<span class="question-mark">?</span>;
 
         <span class="kw">let </span><span class="kw-2">mut </span>media_iter = <span class="self">self</span>.client.iter_download(media);
         <span class="kw">let </span>maybe_chunk = media_iter.next().<span class="kw">await</span>;
         <span class="kw">match </span>maybe_chunk {
             <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(chunk)) =&gt; res_b.extend(chunk),
-            <span class="prelude-val">Err</span>(InvocationError::Rpc(err))
-                <span class="kw">if </span>err.name.starts_with(<span class="string">&quot;FILE_REFERENCE_&quot;</span>) =&gt;
-            {
-                <span class="kw">let </span>new_msg = <span class="self">self</span>.client.get_messages_by_id(
-                    message.chat(), <span class="kw-2">&amp;</span>[message.id()]
-                ).<span class="kw">await</span><span class="question-mark">?</span>.remove(<span class="number">0</span>).expect(<span class="string">&quot;FAILED TO REFETCH MSG?!&quot;</span>);
+            <span class="prelude-val">Err</span>(InvocationError::Rpc(err)) <span class="kw">if </span>err.name.starts_with(<span class="string">&quot;FILE_REFERENCE_&quot;</span>) =&gt; {
+                <span class="kw">let </span>new_msg = <span class="self">self
+                    </span>.client
+                    .get_messages_by_id(message.chat(), <span class="kw-2">&amp;</span>[message.id()])
+                    .<span class="kw">await</span><span class="question-mark">?
+                    </span>.remove(<span class="number">0</span>)
+                    .expect(<span class="string">&quot;FAILED TO REFETCH MSG?!&quot;</span>);
                 <span class="kw">let </span>new_media = <span class="kw-2">&amp;</span>new_msg.media().expect(<span class="string">&quot;COULDN&#39;T FIND MEDIA?!&quot;</span>);
                 media_iter = <span class="self">self</span>.client.iter_download(new_media);
             }
@@ -733,7 +739,7 @@
             </span>.client
             .upload_stream(<span class="kw-2">&amp;mut </span>data, sz, fname.into())
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(doc.into())
+        <span class="prelude-val">Ok</span>(doc)
     }
 }
 </code></pre></div>

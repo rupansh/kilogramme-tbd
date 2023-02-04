@@ -147,7 +147,7 @@
         </span>futs.push(tokio::spawn(<span class="kw">async move </span>{
             handle_c.delete_messages(<span class="kw-2">&amp;</span>chat_c, <span class="kw-2">&amp;</span>col).<span class="kw">await</span>.unwrap_or(<span class="number">0</span>)
         }));
-        <span class="kw">if </span>ids.len() == <span class="number">0 </span>{
+        <span class="kw">if </span>ids.is_empty() {
             <span class="kw">break</span>;
         }
     }

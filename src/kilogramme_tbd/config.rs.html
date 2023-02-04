@@ -127,7 +127,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>conf = File::open(consts::CONFIG_FILE)<span class="question-mark">?</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>confdata = String::new();
         conf.read_to_string(<span class="kw-2">&amp;mut </span>confdata)<span class="question-mark">?</span>;
-        <span class="kw">return </span>toml::from_str(<span class="kw-2">&amp;</span>confdata).map_err(Into::into);
+        toml::from_str(<span class="kw-2">&amp;</span>confdata).map_err(Into::into)
     }
 }
 

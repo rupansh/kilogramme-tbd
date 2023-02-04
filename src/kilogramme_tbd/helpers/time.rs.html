@@ -64,17 +64,17 @@
 
     <span class="kw">let </span>dur = dur.get(..dur.len() - <span class="number">1</span>)<span class="question-mark">?</span>.parse::&lt;u64&gt;().ok()<span class="question-mark">?</span>;
 
-    <span class="kw">return </span><span class="prelude-val">Some</span>(Duration::from_secs(dur * time_c));
+    <span class="prelude-val">Some</span>(Duration::from_secs(dur * time_c))
 }
 
 <span class="doccomment">/// Current system time in UNIX time format
 ///
 /// panics if time stamp is somehow set before 1970
 </span><span class="kw">pub fn </span>epoch_ms() -&gt; u128 {
-    <span class="kw">return </span>SystemTime::now()
+    SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .expect(<span class="string">&quot;IMPOSSIBLE thanos.png&quot;</span>)
-        .as_millis();
+        .as_millis()
 }
 </code></pre></div>
 </section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="kilogramme_tbd" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (658fad6c5 2023-02-03)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>

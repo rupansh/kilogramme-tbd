@@ -216,10 +216,27 @@
 <a href="#216" id="216">216</a>
 <a href="#217" id="217">217</a>
 <a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
+<a href="#222" id="222">222</a>
+<a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
+<a href="#225" id="225">225</a>
+<a href="#226" id="226">226</a>
+<a href="#227" id="227">227</a>
+<a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
+<a href="#230" id="230">230</a>
+<a href="#231" id="231">231</a>
+<a href="#232" id="232">232</a>
+<a href="#233" id="233">233</a>
+<a href="#234" id="234">234</a>
+<a href="#235" id="235">235</a>
 </pre><pre class="rust"><code><span class="comment">// Copyright 2021 - 2021, Rupansh Sekar and the Kilogramme (TBD) contributors
 // SPDX-License-Identifier: MPL-2.0
 </span><span class="kw">use crate</span>::{
-    consts::{stickers::<span class="kw-2">*</span>},
+    consts::stickers::<span class="kw-2">*</span>,
     errors::UserBotError,
     helpers::image,
     userbot::{CommandHandlerResult, UserBot},
@@ -258,15 +275,21 @@
     <span class="kw">let </span>media = reply.media().ok_or(UserBotError::NoSticker)<span class="question-mark">?</span>;
     <span class="kw">let </span>sticker_file = <span class="kw">match </span>media {
         Media::Sticker(sticker) =&gt; sticker.document,
-        Media::Document(document) <span class="kw">if </span>document.mime_type()
-            .filter(|mime| <span class="macro">matches!</span>(<span class="kw-2">*</span>mime, <span class="string">&quot;image/webp&quot; </span>| <span class="string">&quot;image/png&quot;</span>)).is_some() =&gt; document,
+        Media::Document(document)
+            <span class="kw">if </span>document
+                .mime_type()
+                .filter(|mime| <span class="macro">matches!</span>(<span class="kw-2">*</span>mime, <span class="string">&quot;image/webp&quot; </span>| <span class="string">&quot;image/png&quot;</span>))
+                .is_some() =&gt;
+        {
+            document
+        }
         <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(UserBotError::NoSticker)<span class="question-mark">?</span>,
     };
 
     <span class="kw">let </span>fname = sticker_file.name().to_string();
     <span class="kw">let </span>sticker_media = Media::Document(sticker_file);
 
-    <span class="kw">let </span>dlbuf = bot.download_media(<span class="kw-2">&amp;</span>message, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>sticker_media)).<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="kw">let </span>dlbuf = bot.download_media(message, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>sticker_media)).<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="kw">let </span>sticker = bot.upload_media(<span class="kw-2">&amp;</span>dlbuf, fname).<span class="kw">await</span><span class="question-mark">?</span>;
 
     message.reply(InputMessage::text(<span class="string">&quot;&quot;</span>).file(sticker)).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -276,18 +299,21 @@
 
 <span class="kw">async fn </span>pack_exists(bot: <span class="kw-2">&amp;mut </span>UserBot, pack: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;bool, InvocationError&gt; {
     <span class="kw">let </span>stickerset = tl::types::InputStickerSetShortName {
-        short_name: pack.to_string()
-    }.into();
+        short_name: pack.to_string(),
+    }
+    .into();
 
     <span class="kw">let </span>req = tl::functions::messages::GetStickerSet {
         stickerset,
-        hash: <span class="number">0
-    </span>};
+        hash: <span class="number">0</span>,
+    };
 
     <span class="kw">match </span>bot.client.invoke(<span class="kw-2">&amp;</span>req).<span class="kw">await </span>{
         <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>),
-        <span class="prelude-val">Err</span>(InvocationError::Rpc(RpcError { <span class="kw-2">ref </span>name, .. })) <span class="kw">if </span>name == STICKERSET_INVALID =&gt; <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>),
-        <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(e.into()),
+        <span class="prelude-val">Err</span>(InvocationError::Rpc(RpcError { <span class="kw-2">ref </span>name, .. })) <span class="kw">if </span>name == STICKERSET_INVALID =&gt; {
+            <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>)
+        }
+        <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(e),
     }
 }
 
@@ -324,7 +350,14 @@
             resize = <span class="bool-val">false</span>;
             <span class="prelude-val">Ok</span>(media)
         }
-        Media::Document(document) <span class="kw">if </span>document.mime_type().filter(|mime| <span class="macro">matches!</span>(<span class="kw-2">*</span>mime, <span class="string">&quot;image/webp&quot; </span>| <span class="string">&quot;image/png&quot; </span>| <span class="string">&quot;image/jpeg&quot;</span>)).is_some() =&gt; <span class="prelude-val">Ok</span>(media),
+        Media::Document(document)
+            <span class="kw">if </span>document
+                .mime_type()
+                .filter(|mime| <span class="macro">matches!</span>(<span class="kw-2">*</span>mime, <span class="string">&quot;image/webp&quot; </span>| <span class="string">&quot;image/png&quot; </span>| <span class="string">&quot;image/jpeg&quot;</span>))
+                .is_some() =&gt;
+        {
+            <span class="prelude-val">Ok</span>(media)
+        }
         <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(UserBotError::NoArguments),
     }<span class="question-mark">?</span>;
 
@@ -349,7 +382,9 @@
             <span class="comment">// TG stickers are 512x512
             </span><span class="kw">let </span>im = image::im_resize_clamped(<span class="kw-2">&amp;</span>im, <span class="number">512</span>, <span class="number">512</span>);
             image::png_encode(im)
-        }).<span class="kw">await</span>.unwrap()<span class="question-mark">?</span>;
+        })
+        .<span class="kw">await
+        </span>.unwrap()<span class="question-mark">?</span>;
         <span class="kw">let </span>sticker = bot.upload_media(<span class="kw-2">&amp;</span>im, STICKER_FILE).<span class="kw">await</span><span class="question-mark">?</span>;
         sticker_message.document(sticker)
     } <span class="kw">else </span>{
@@ -387,9 +422,7 @@
         bot.wait_reply(chat, <span class="kw-2">&amp;</span>prev).<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="comment">// Send Sticker
-        </span>prev = prev
-            .respond(sticker_message)
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        </span>prev = prev.respond(sticker_message).<span class="kw">await</span><span class="question-mark">?</span>;
         bot.wait_reply(chat, <span class="kw-2">&amp;</span>prev).<span class="kw">await</span><span class="question-mark">?</span>;
 
         prev = prev.respond(InputMessage::text(emoji)).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -412,9 +445,7 @@
         bot.wait_reply(chat, <span class="kw-2">&amp;</span>prev).<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="comment">// Send Sticker
-        </span>prev = prev
-            .respond(sticker_message)
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        </span>prev = prev.respond(sticker_message).<span class="kw">await</span><span class="question-mark">?</span>;
         bot.wait_reply(chat, <span class="kw-2">&amp;</span>prev).<span class="kw">await</span><span class="question-mark">?</span>;
 
         prev = prev.respond(InputMessage::text(emoji)).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -429,7 +460,10 @@
     </span>std::mem::drop(chatg);
 
     message
-        .edit(InputMessage::markdown(<span class="macro">fmt!</span>(PACK_ADD_SUCCESS, pack_name = pack)))
+        .edit(InputMessage::markdown(<span class="macro">fmt!</span>(
+            PACK_ADD_SUCCESS,
+            pack_name = pack
+        )))
         .<span class="kw">await</span><span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())

@@ -96,8 +96,6 @@
 <a href="#96" id="96">96</a>
 <a href="#97" id="97">97</a>
 <a href="#98" id="98">98</a>
-<a href="#99" id="99">99</a>
-<a href="#100" id="100">100</a>
 </pre><pre class="rust"><code><span class="comment">// Copyright 2021 - 2021, Rupansh Sekar and the Kilogramme (TBD) contributors
 // SPDX-License-Identifier: MPL-2.0
 </span><span class="kw">use crate</span>::{
@@ -121,9 +119,7 @@
 ///
 </span><span class="comment">//UserBotCmd !id
 </span><span class="kw">pub async fn </span>id_handler(bot: <span class="kw-2">&amp;mut </span>UserBot, message: <span class="kw-2">&amp;mut </span>Message) -&gt; CommandHandlerResult {
-    <span class="kw">let </span>res: String;
-
-    res = <span class="kw">match </span>bot.get_arg_user(message).<span class="kw">await </span>{
+    <span class="kw">let </span>res: String = <span class="kw">match </span>bot.get_arg_user(message).<span class="kw">await </span>{
         <span class="prelude-val">Ok</span>(user) =&gt; <span class="macro">fmt!</span>(USER_ID_FMT, user.id()),
         <span class="prelude-val">Err</span>(UserBotError::NoArguments) =&gt; {
             <span class="kw">let </span>chat = message.chat();
@@ -132,7 +128,7 @@
                 <span class="kw">_ </span>=&gt; <span class="macro">fmt!</span>(CHAT_ID_FMT, chat.id()),
             }
         }
-        <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e.into()),
+        <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e),
     };
 
     message.edit(InputMessage::markdown(res)).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -157,7 +153,7 @@
             <span class="prelude-val">Some</span>(Chat::User(u)) =&gt; u,
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(UserBotError::PeerNotUser)<span class="question-mark">?</span>,
         },
-        <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e.into()),
+        <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e),
     };
 
     <span class="kw">let </span>infos = <span class="macro">fmt!</span>(

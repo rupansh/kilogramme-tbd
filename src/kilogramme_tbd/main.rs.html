@@ -95,6 +95,8 @@
 <a href="#95" id="95">95</a>
 <a href="#96" id="96">96</a>
 <a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
 </pre><pre class="rust"><code><span class="comment">// Copyright 2021 - 2021, Rupansh Sekar and the Kilogramme (TBD) contributors
 // SPDX-License-Identifier: MPL-2.0
 </span><span class="kw">mod </span>config;
@@ -107,13 +109,13 @@
 <span class="kw">mod </span>userbot;
 
 <span class="kw">use </span>config::UserBotConfig;
-<span class="kw">use </span>ctrlc;
+
 <span class="kw">use </span>grammers_client::Update;
 <span class="kw">use </span>helpers::time;
 <span class="kw">use </span>simplelog::<span class="kw-2">*</span>;
 <span class="kw">use </span>std::fs::File;
-<span class="kw">use </span>userbot::<span class="kw-2">*</span>;
 <span class="kw">use </span>tokio::sync::watch;
+<span class="kw">use </span>userbot::<span class="kw-2">*</span>;
 
 <span class="comment">// TODO: Documentation, Kang
 </span><span class="kw">fn </span>main() {
@@ -163,10 +165,12 @@
 
     <span class="kw">let </span>(tx, <span class="kw-2">mut </span>rx) = watch::channel::&lt;()&gt;(());
 
-    <span class="kw">if </span>ctrlc::set_handler(<span class="kw">move </span>|| {
+    <span class="kw">let </span>ctrlc_res = ctrlc::set_handler(<span class="kw">move </span>|| {
         <span class="macro">log::info!</span>(<span class="string">&quot;shutting down bot...&quot;</span>);
         tx.send(()).unwrap();
-    }).is_err() {
+    });
+
+    <span class="kw">if </span>ctrlc_res.is_err() {
         <span class="macro">log::warn!</span>(<span class="string">&quot;failed to set ctrl+c handler. Bot won&#39;t save session before quitting!&quot;</span>);
     }
 
