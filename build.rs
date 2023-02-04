@@ -58,8 +58,7 @@ fn main() -> io::Result<()> {
                     .unwrap();
 
                 cases.push(format!(
-                    "Some(\"{}\") => plugins::{}(bot, message).await,",
-                    prev_cmd, fn_name
+                    "Some(\"{prev_cmd}\") => plugins::{fn_name}(bot, message).await,"
                 ));
                 fn_flag = false;
             }
@@ -69,7 +68,7 @@ fn main() -> io::Result<()> {
     let cmd_hnd_src = fmt!(CMD_GEN_SRC, src = &cases.join("\n"));
     let cmd_hnd_file = Path::new(&std::env::var("OUT_DIR").unwrap()).join("commands.gen.rs");
     let mut writer = BufWriter::new(fs::File::create(cmd_hnd_file).unwrap());
-    write!(&mut writer, "{}", cmd_hnd_src).unwrap();
+    write!(&mut writer, "{cmd_hnd_src}").unwrap();
 
     Ok(())
 }
