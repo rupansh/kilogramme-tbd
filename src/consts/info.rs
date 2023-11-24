@@ -4,7 +4,7 @@ use reusable_fmt::fmt_reuse;
 
 fmt_reuse! {
     // This has 2 spaces at the end of every line to force line breaks
-    INFO_TEMPLATE = r#"{header}
+    INFO_TEMPLATE = r#"{header}\
 **ID:** {id}  
 **First Name:** {fname}  
 **Last Name:** {lname}  
@@ -14,7 +14,7 @@ fmt_reuse! {
     CHAT_ID_FMT = "**CHATID:** `{}`";
     P_UID_FMT = "***Personal UID:** `{}`";
 
-    PONG_FMT = r#"***PONG!***
+    PONG_FMT = r#"***PONG!***\
 `Ping: {}ms`"#;
 }
 
