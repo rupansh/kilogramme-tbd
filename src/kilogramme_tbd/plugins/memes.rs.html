@@ -203,6 +203,8 @@
 <span class="kw">use </span>rand::seq::SliceRandom;
 <span class="kw">use </span>rand::Rng;
 
+<span class="kw">use </span>std::fmt::Write;
+
 <span class="doccomment">/// owo text (・`ω´・)
 ///
 /// ## Scope
@@ -270,24 +272,22 @@
 </span><span class="kw">pub async fn </span>vapor_handler(bot: <span class="kw-2">&amp;mut </span>UserBot, message: <span class="kw-2">&amp;mut </span>Message) -&gt; CommandHandlerResult {
     <span class="kw">let </span>arg = <span class="kw-2">&amp;</span>bot.get_args_text(message, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>[<span class="number">0</span>];
 
-    <span class="kw">let </span>res: String = arg
-        .as_str()
-        .chars()
-        .map(|charac| {
-            <span class="macro">format!</span>(
-                <span class="string">&quot;{}{}&quot;</span>,
-                <span class="kw">if </span>charac.is_whitespace() { <span class="string">&quot; &quot; </span>} <span class="kw">else </span>{ <span class="string">&quot;&quot; </span>},
-                <span class="kw">if </span><span class="number">0x21 </span>&lt;= charac <span class="kw">as </span>u32 &amp;&amp; charac <span class="kw">as </span>u32 &lt;= <span class="number">0x7F </span>{
-                    std::char::from_u32(charac <span class="kw">as </span>u32 + <span class="number">0xFEE0</span>)
-                        .unwrap_or(std::char::REPLACEMENT_CHARACTER)
-                } <span class="kw">else if </span>charac <span class="kw">as </span>u32 == <span class="number">0x20 </span>{
-                    std::char::from_u32(<span class="number">0x3000</span>).unwrap()
-                } <span class="kw">else </span>{
-                    charac
-                }
-            )
-        })
-        .collect();
+    <span class="kw">let </span>res: String = arg.as_str().chars().fold(String::new(), |<span class="kw-2">mut </span>out, charac| {
+        <span class="kw">let _ </span>= <span class="macro">write!</span>(
+            out,
+            <span class="string">&quot;{}{}&quot;</span>,
+            <span class="kw">if </span>charac.is_whitespace() { <span class="string">&quot; &quot; </span>} <span class="kw">else </span>{ <span class="string">&quot;&quot; </span>},
+            <span class="kw">if </span><span class="number">0x21 </span>&lt;= charac <span class="kw">as </span>u32 &amp;&amp; charac <span class="kw">as </span>u32 &lt;= <span class="number">0x7F </span>{
+                std::char::from_u32(charac <span class="kw">as </span>u32 + <span class="number">0xFEE0</span>)
+                    .unwrap_or(std::char::REPLACEMENT_CHARACTER)
+            } <span class="kw">else if </span>charac <span class="kw">as </span>u32 == <span class="number">0x20 </span>{
+                std::char::from_u32(<span class="number">0x3000</span>).unwrap()
+            } <span class="kw">else </span>{
+                charac
+            }
+        );
+        out
+    });
 
     message.edit(InputMessage::text(res)).<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
