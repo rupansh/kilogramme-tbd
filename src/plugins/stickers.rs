@@ -22,8 +22,6 @@ static STICKER_CHAT: OnceCell<Mutex<Chat>> = OnceCell::new();
 
 /// Download a sticker as a file
 ///
-/// ⚠️***WARN***⚠️: Currently can't handle stickers on other Data Centers
-///
 /// ## Scope
 /// Anywhere
 ///
@@ -83,8 +81,6 @@ async fn pack_exists(bot: &mut UserBot, pack: &str) -> Result<bool, InvocationEr
 }
 
 /// Duplicate a sticker into a userbot's custom sticker pack
-///
-/// ⚠️***WARN***⚠️: Currently can't handle stickers on other Data Centers
 ///
 /// ## Scope
 /// Anywhere

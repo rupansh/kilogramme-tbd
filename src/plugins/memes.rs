@@ -6,6 +6,8 @@ use grammers_client::types::{InputMessage, Message};
 use rand::seq::SliceRandom;
 use rand::Rng;
 
+use std::fmt::Write;
+
 /// owo text (・`ω´・)
 ///
 /// ## Scope
@@ -73,24 +75,22 @@ pub async fn stretch_handler(bot: &mut UserBot, message: &mut Message) -> Comman
 pub async fn vapor_handler(bot: &mut UserBot, message: &mut Message) -> CommandHandlerResult {
     let arg = &bot.get_args_text(message, false).await?[0];
 
-    let res: String = arg
-        .as_str()
-        .chars()
-        .map(|charac| {
-            format!(
-                "{}{}",
-                if charac.is_whitespace() { " " } else { "" },
-                if 0x21 <= charac as u32 && charac as u32 <= 0x7F {
-                    std::char::from_u32(charac as u32 + 0xFEE0)
-                        .unwrap_or(std::char::REPLACEMENT_CHARACTER)
-                } else if charac as u32 == 0x20 {
-                    std::char::from_u32(0x3000).unwrap()
-                } else {
-                    charac
-                }
-            )
-        })
-        .collect();
+    let res: String = arg.as_str().chars().fold(String::new(), |mut out, charac| {
+        let _ = write!(
+            out,
+            "{}{}",
+            if charac.is_whitespace() { " " } else { "" },
+            if 0x21 <= charac as u32 && charac as u32 <= 0x7F {
+                std::char::from_u32(charac as u32 + 0xFEE0)
+                    .unwrap_or(std::char::REPLACEMENT_CHARACTER)
+            } else if charac as u32 == 0x20 {
+                std::char::from_u32(0x3000).unwrap()
+            } else {
+                charac
+            }
+        );
+        out
+    });
 
     message.edit(InputMessage::text(res)).await?;
     Ok(())
