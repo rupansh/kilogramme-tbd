@@ -53,7 +53,6 @@ yes
 Sorted by priority
 
 - More documentation (available commands, etc)
-- Fixing sticker related commands
 - Many memez
 - Battle testing (#helpme)
 
