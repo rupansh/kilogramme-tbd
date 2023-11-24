@@ -54,7 +54,7 @@ pub async fn get_sticker_handler(bot: &mut UserBot, message: &mut Message) -> Co
     let fname = sticker_file.name().to_string();
     let sticker_media = Media::Document(sticker_file);
 
-    let dlbuf = bot.download_media(message, Some(&sticker_media)).await?;
+    let dlbuf = bot.download_media(message, Some(sticker_media)).await?;
     let sticker = bot.upload_media(&dlbuf, fname).await?;
 
     message.reply(InputMessage::text("").file(sticker)).await?;
@@ -141,7 +141,7 @@ pub async fn kang_handler(bot: &mut UserBot, message: &mut Message) -> CommandHa
 
     let mut sticker_message = InputMessage::text("");
     sticker_message = if resize {
-        let stick_bytes = bot.download_media(&reply, Some(&sticker)).await?;
+        let stick_bytes = bot.download_media(&reply, Some(sticker)).await?;
         let im: Vec<u8> = tokio::task::spawn_blocking(move || {
             let im = image::image_from_buf(&stick_bytes)?;
             // TG stickers are 512x512

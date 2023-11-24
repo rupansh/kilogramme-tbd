@@ -41,13 +41,7 @@ pub async fn client_from_config(conf: &UserBotConfig) -> Result<Client, UserBotI
 
     let client = Client::connect(tconf).await?;
     if !client.is_authorized().await? {
-        let sent_code = client
-            .request_login_code(
-                &conf.telegram.phone,
-                conf.telegram.api_id,
-                &conf.telegram.api_hash,
-            )
-            .await?;
+        let sent_code = client.request_login_code(&conf.telegram.phone).await?;
         println!("Please Enter Authentication from Telegram");
         let mut code = String::new();
         BufReader::new(io::stdin()).read_line(&mut code).await?;

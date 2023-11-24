@@ -38,7 +38,7 @@ fn main() -> io::Result<()> {
 
         let mut fn_flag = false;
         let mut prev_cmd = String::new();
-        for line in reader.lines().filter_map(|p| p.ok()) {
+        for line in reader.lines().map_while(|p| p.ok()) {
             if let Some(c) = line.trim().strip_prefix(COMMAND_PREFIX) {
                 fn_flag = true;
                 prev_cmd = c.trim().to_string();

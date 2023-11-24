@@ -10,6 +10,7 @@ use crate::{
     helpers::protolib as protohelper,
     plugins,
 };
+use gramme::types::Downloadable;
 use grammers_client as gramme;
 use grammers_mtsender::{InvocationError, ReadError};
 use std::io;
@@ -196,11 +197,10 @@ impl UserBot {
         &self,
         message: &gramme::types::Message,
     ) -> Option<gramme::types::Message> {
-        return self
-            .client
+        self.client
             .get_reply_to_message(message)
             .await
-            .unwrap_or(None);
+            .unwrap_or(None)
     }
 
     fn a_get_args(&self, msg: Option<&str>, split: bool) -> Result<Vec<String>, UserBotError> {
@@ -320,16 +320,16 @@ impl UserBot {
     pub async fn download_media(
         &self,
         message: &gramme::types::Message,
-        media: Option<&gramme::types::Media>,
+        media: Option<gramme::types::Media>,
     ) -> Result<Vec<u8>, UserBotError> {
         let mut res_b = Vec::<u8>::new();
-        let mut bind: Option<gramme::types::Media> = None;
-        let media = media.map(Ok).unwrap_or_else(|| {
-            bind = message.media();
-            bind.as_ref().ok_or(UserBotError::NoMedia)
-        })?;
+        let media = Downloadable::Media(
+            media
+                .map(Ok)
+                .unwrap_or_else(|| message.media().ok_or(UserBotError::NoMedia))?,
+        );
 
-        let mut media_iter = self.client.iter_download(media);
+        let mut media_iter = self.client.iter_download(&media);
         let maybe_chunk = media_iter.next().await;
         match maybe_chunk {
             Ok(Some(chunk)) => res_b.extend(chunk),
@@ -340,8 +340,9 @@ impl UserBot {
                     .await?
                     .remove(0)
                     .expect("FAILED TO REFETCH MSG?!");
-                let new_media = &new_msg.media().expect("COULDN'T FIND MEDIA?!");
-                media_iter = self.client.iter_download(new_media);
+                let new_media =
+                    Downloadable::Media(new_msg.media().expect("COULDN'T FIND MEDIA?!"));
+                media_iter = self.client.iter_download(&new_media);
             }
             Err(e) => return Err(e.into()),
             Ok(None) => return Ok(res_b), // empty file?!
