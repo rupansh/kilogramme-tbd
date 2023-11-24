@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":[["DAY_SECS","seconds in a day"],["HOUR_SECS","seconds in an hour"],["MINUTE_SECS","seconds in a minute"]]};
+window.SIDEBAR_ITEMS = {"constant":["DAY_SECS","HOUR_SECS","MINUTE_SECS"]};

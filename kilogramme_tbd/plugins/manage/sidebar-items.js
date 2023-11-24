@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":[["demote_handler","demote an admin"],["pin_handler","pin “reply-to” message"],["promote_handler","promote a user to admin"],["unpin_handler","unpin “reply-to” message"]],"opaque":[["",""]]};
+window.SIDEBAR_ITEMS = {"fn":["demote_handler","pin_handler","promote_handler","unpin_handler"]};

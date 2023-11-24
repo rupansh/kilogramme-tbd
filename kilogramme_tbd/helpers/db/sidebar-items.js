@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":[["add_note",""],["find_note",""],["note_list",""],["notes_collection",""],["remove_note",""],["sticker_pack_name",""],["stickers_collection",""]],"opaque":[["",""]],"type":[["DbResult",""]]};
+window.SIDEBAR_ITEMS = {"fn":["add_note","find_note","note_list","notes_collection","remove_note","sticker_pack_name","stickers_collection"],"type":["DbResult"]};

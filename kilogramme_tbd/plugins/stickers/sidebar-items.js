@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":[["get_sticker_handler","Download a sticker as a file"],["kang_handler","Duplicate a sticker into a userbot’s custom sticker pack"],["pack_exists",""]],"opaque":[["",""]],"static":[["STICKER_CHAT",""]]};
+window.SIDEBAR_ITEMS = {"fn":["get_sticker_handler","kang_handler","pack_exists"],"static":["STICKER_CHAT"]};

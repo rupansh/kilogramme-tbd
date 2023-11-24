@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":[["DEMOTE_TXT",""],["PIN_TXT",""],["PROMOTE_TXT",""],["UNPIN_TXT",""]]};
+window.SIDEBAR_ITEMS = {"constant":["DEMOTE_TXT","PIN_TXT","PROMOTE_TXT","UNPIN_TXT"]};

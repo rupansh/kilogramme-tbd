@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":[["add_note_handler","Creates a Note"],["all_notes_handler","Get a list of all note keys"],["get_note_handler","Fetch a Note"],["rm_notes_handler","Delete a Note"]],"opaque":[["",""]]};
+window.SIDEBAR_ITEMS = {"fn":["add_note_handler","all_notes_handler","get_note_handler","rm_notes_handler"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":[["COLLECTION_NOTES","Collection in which notes are stored"],["COLLECTION_STICKERS","Collection in which kang related info is stored"],["DB_NAME","Database in which userbot info is stored"]]};
+window.SIDEBAR_ITEMS = {"constant":["COLLECTION_NOTES","COLLECTION_STICKERS","DB_NAME"]};

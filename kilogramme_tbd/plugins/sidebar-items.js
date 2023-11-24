@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":[["basic","Example bot command handler"],["info","Handlers related to Userbot & Telgram Info"],["manage","Handlers related to group management"],["memes","le epic memes"],["msgdel","Handlers related to message manipulation"],["notes","Handlers related to saving and deleting notes"],["restrict","Handlers related to restricting users"],["stickers","Kangz and stuffz"]]};
+window.SIDEBAR_ITEMS = {"mod":["basic","info","manage","memes","msgdel","notes","restrict","stickers"]};

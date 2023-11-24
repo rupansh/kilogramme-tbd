@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":[["client",""]]};
+window.SIDEBAR_ITEMS = {"mod":["client"]};

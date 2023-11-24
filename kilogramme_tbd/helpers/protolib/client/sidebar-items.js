@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":[["client_from_config","Create an instance of [`grammers_client::Client`] from [`crate::config::UserBotConfig`]"],["load_or_create_session",""],["new_session",""]],"opaque":[["",""]]};
+window.SIDEBAR_ITEMS = {"fn":["client_from_config","load_or_create_session","new_session"]};

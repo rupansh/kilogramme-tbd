@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["UserBotError","Main Error Wrapper"],["UserBotInitError","Initialization Error Wrapper"]]};
+window.SIDEBAR_ITEMS = {"enum":["UserBotError","UserBotInitError"]};
